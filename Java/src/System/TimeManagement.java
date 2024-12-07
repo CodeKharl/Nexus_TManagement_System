@@ -63,9 +63,9 @@ public class TimeManagement implements Design_Animation{
     }
 
     private void setProgramData(String nickName){
-        String[] activityNames = {"Study", "Sleep", "Leisure Time", "Exercise"};
-        double[] minHours = {2, 8, 2, 0.5};
-        double[] maxHours = {8, 10, 5, 2};
+        String[] activityNames = {"Study", "Sleep", "Personal Time", "Exercise", "Community Work", "Reproductive Work"};
+        double[] minHours = {2, 7, 1, 0.5, 1, 0.5};
+        double[] maxHours = {6, 9, 3, 2, 3, 3};
 
         String[][] messages_feedbacks = {
             {
@@ -95,7 +95,7 @@ public class TimeManagement implements Design_Animation{
 
             {
                 """
-                \t\t    Remember that leisure time isn't a waste-it's a vital part of staying healthy and productive. While it's commendable
+                \t\t    Remember that personal time isn't a waste-it's a vital part of staying healthy and productive. While it's commendable
                 \t\t    that you've been so focused on your responsibilities, constantly pushing without rest can drain your energy and
                 \t\t    creativity. Takin even a short break to do something you enjoy can refresh your mind, reduce stress, and help you
                 \t\t    perform better.""",
@@ -118,6 +118,30 @@ public class TimeManagement implements Design_Animation{
                 \t\t    and effect your studies or recovery. Balance your routinge to include rest and focus on academics while maintaining a
                 \t\t    healthy lifestyle."""
             },
+
+            {
+                """
+                \t\t    I know things can get busyt, and it's not always easy to meet your communitry work goals. Remember, every small effort
+                \t\t    makes a difference, and your involvement truly matters. Completing these hours is not just about meeting a requirement
+                \t\t    --it's chance to learn, grow, and make an impact. I believe in you and know you have what takes to reach this goal.
+                \t\t    Keep going, and don't be affraid to reach out for support or advice. You've got this!""",
+
+                """
+                \t\t    I'm impressed by your dedication and commitment to communitry work! Your hard work is truly appreciated, but don't
+                \t\t    forget to balance it with rest and self-care. Your well-being is important, too. Keep up the great work!"""
+            },
+
+            {
+                """
+                \t\t    I noticed you didn't meet the minimum hours of reproductive work. I understand that balancing everything can be tough,
+                \t\t    but these tasks are important for your growth and the well-being of those around you. Remember, even small contri-
+                \t\t    butions make a difference.""",
+                
+                """
+                \t\t    I really admire your dedication and the hard work you put into your responsibilities. However, I want to remind you to
+                \t\t    take some time for yourself and find a a healthy balance. Overextending yourself with reproductive work can lead to
+                \t\t    burnout, so make sure you're also prioritizing rest and self-care. You deserve it!"""
+            }
         };
 
         getUserData(nickName, activityNames, minHours, maxHours, messages_feedbacks);
@@ -133,14 +157,14 @@ public class TimeManagement implements Design_Animation{
         int count = 0;
         while(count < activities.length){
             clear();
-            printNewlines_aligment(16, DEFAULT_NO_COLUMNS.getValue(), "How many hours did you spent on following actitivies:");
+            printNewlines_aligment(15, DEFAULT_NO_COLUMNS.getValue(), "How many hours did you spent on following actitivies:");
             lnprint_alignment(DEFAULT_NO_COLUMNS.getValue(), "-".repeat(60));
             
             for(int i = 0; i < count; i++) printWithNewlines_tabs_spaces(2, 7, 2, activities[i].activityName + " : " + activities[i].hours);
 
             try {
                 printWithNewlines_tabs_spaces(2, 7, 2, activities[count].activityName + " : ");
-                activities[count].hours = Integer.parseInt(scan.nextLine());
+                activities[count].hours = Double.parseDouble(scan.nextLine());
                 totalHours += activities[count].hours;
                 count++;
             }catch (NumberFormatException e) {
@@ -158,7 +182,7 @@ public class TimeManagement implements Design_Animation{
 
         LENGTH.setValue(60);
 
-        printNewlines_withAnimation_alignment(15, DEFAULT_ANIMATION_SPEED.getValue(), DEFAULT_NO_COLUMNS.getValue(), "NEXUS ANALYSIS");
+        printNewlines_withAnimation_alignment(13, DEFAULT_ANIMATION_SPEED.getValue(), DEFAULT_NO_COLUMNS.getValue(), "NEXUS ANALYSIS");
         lnprintWithAnimation_alignment(DEFAULT_ANIMATION_SPEED.getValue(), DEFAULT_NO_COLUMNS.getValue(), "-".repeat(LENGTH.getValue()));
 
         if (totalHours > 24) lnprintWithAnimation_alignment(DEFAULT_ANIMATION_SPEED.getValue(), DEFAULT_NO_COLUMNS.getValue(), "NOTE: Total reported hours exceed 24 hours in a Day");
