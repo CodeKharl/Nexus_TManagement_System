@@ -1,5 +1,7 @@
 package System;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -8,19 +10,16 @@ public class TimeManagement implements Design_Animation{
 
     Design_Animation.design LENGTH = Design_Animation.design.LENGTH;
     Design_Animation.design DEFAULT_ANIMATION_SPEED = Design_Animation.design.DEFAULT_ANIMATION_SPEED;
+    Design_Animation.design SHORT_DELAY = Design_Animation.design.SHORT_DELAY;
     Design_Animation.design DEFAULT_DELAY = Design_Animation.design.DEFAULT_DELAY;
     Design_Animation.design DEFAULT_NO_COLUMNS = Design_Animation.design.DEFAULT_NO_COLUMNS;
     Design_Animation.design LONG_ANIMATION_SPEED = Design_Animation.design.LONG_ANIMATION_SPEED;
 
     public void startUp(){
-        String nickname;
-
         clear();
-        printNewlines_withAnimation_alignment(18, DEFAULT_ANIMATION_SPEED.getValue(), DEFAULT_NO_COLUMNS.getValue(), "Hi I'm Nexus (Time Management), May I know how should address you?");
+        printNewlines_withAnimation_alignment(18, DEFAULT_ANIMATION_SPEED.getValue(), DEFAULT_NO_COLUMNS.getValue(), "Hi I'm Nexus, a Time Management System. May I know how should address you?");
         printNewlines_aligment(2, DEFAULT_NO_COLUMNS.getValue() - 62, "--> ");
-        nickname = scan.nextLine();
-
-        systemMenu(nickname);
+        systemMenu(scan.nextLine());
     }
 
     private void systemMenu(String nickname){
@@ -41,15 +40,11 @@ public class TimeManagement implements Design_Animation{
             printNewlines_withAnimation_alignment(2, DEFAULT_ANIMATION_SPEED.getValue(), DEFAULT_NO_COLUMNS.getValue() - 20, nickname + ", ENTER HERE -->  ");
             
             try {
-                int choice = Integer.parseInt(scan.nextLine());
-
-                switch(choice){
+                switch(Integer.parseInt(scan.nextLine())){
                     case 1 -> setProgramData(nickname);
                     case 2 -> {
-                        printNewlines_withAnimation_alignment(2, LONG_ANIMATION_SPEED.getValue(), DEFAULT_NO_COLUMNS.getValue(), "Thank you for using Nexus! See you next time " + nickname + "!");
-                        threading(DEFAULT_DELAY.getValue());
-                        clear();
-                        break OUTER;
+                        userFeedBack(nickname);
+                        break OUTER;  //label break statement
                     }
 
                     default -> printNewlines_withAnimation_alignment(2, DEFAULT_ANIMATION_SPEED.getValue(), DEFAULT_NO_COLUMNS.getValue(), "Hmm, that doesn't seem right. Nexus only understand the two prompts.");
@@ -63,138 +58,137 @@ public class TimeManagement implements Design_Animation{
     }
 
     private void setProgramData(String nickName){
-        String[] activityNames = {"Study", "Sleep", "Personal Time", "Exercise", "Community Work", "Reproductive Work"};
-        double[] minHours = {2, 7, 1, 0.5, 1, 0.5};
-        double[] maxHours = {6, 9, 3, 2, 3, 3};
+        String[][] activityNames = {{"Study"}, {"Cooking", "Cleaning"}, {"Voluntary", "Social Activities"}, {"Sleep", "Exercise",}};
+        String[] worktypes = {"Productive", "Reproductive", "Community", "Personal"};
+
+        double[] minHours = {5, 1, 1, 9};
+        double[] maxHours = {8, 2, 2, 12};
 
         String[][] messages_feedbacks = {
             {
                 """
-                \t\t    Don't panic! Even if you haven't studied much, there's still hope. Dedicate at least 2 hours a day to focused study
-                \t\t    sessions. Prioritize the most important topics and use effective techniques like active recall and spaced repetition.
-                \t\t    Seek help from teachers, tutors, or online resources. Stay positive and believe in yourself. Remember, every bit of
-                \t\t    effort counts.""",
+                \t\t    Your recent productive hours did not meet the minimum requirement. Maintaining consistent productivity is crucial
+                \t\t    for achieving your goals. If there were any challenges that impacted your focus or workflow, consider identifying
+                \t\t    them and implementing strategies to overcome them. Nexus recommends reviewing your tasks, setting clear priorities,
+                \t\t    and using breaks effectively to optimize your time. Let's work towards better results in the next cycle!""",
                 
                 """
-                \t\t    Don't overdo it! While consistent study is important, overstudying can lead to burnout and decreased productivity.
-                \t\t    Balance your study time with rest, relaxation, and other activities you enjoy. Prioritize your tasks, take breaks,
-                \t\t    and practice self-care. Remember, a well-rested and focused mind is more effective than an exhausted one."""
+                \t\t    Your dedication and hard work are admirable, and it shows how committed you are to your responsibilities. But remember
+                \t\t    your well-being is just as important. Pushing yourself beyond your limits can lead to burnout and take a toll on your
+                \t\t    health and happiness. Allow yourself to rest, recharge, and find that balance. Taking time to care for yourself will
+                \t\t    ultimately make you more effective and fulfilled in your work."""
             },
 
             {
                 """
-                \t\t    I noticed you didn't quite reach the recommended hours of sleep. Sleep is so important for your energy, focus, and
-                \t\t    overall health. I know life can get busy, but maybe prioritizing your rest when you can could really make a
-                \t\t    difference in how you feel and perform.""",
-
-                """
-                \t\t    Getting enough sleep is important, but sleeping too much can sometimes leave you feeling sluggish or disrupt your
-                \t\t    routine. It might help to aim for a balanced amount of sleep to stay energized and maintain productivity throughout
-                \t\t    the day."""
-            },
-
-            {
-                """
-                \t\t    Remember that personal time isn't a waste-it's a vital part of staying healthy and productive. While it's commendable
-                \t\t    that you've been so focused on your responsibilities, constantly pushing without rest can drain your energy and
-                \t\t    creativity. Takin even a short break to do something you enjoy can refresh your mind, reduce stress, and help you
-                \t\t    perform better.""",
-
-                """
-                \t\t    it's great that you're taking time to enjoy yourself, but remember that balance is key to long-term success and
-                \t\t    well-being. Excessive leisure can sometimes distract from your goals or responsibilities, so it's importatn to manage
-                \t\t    your time wisely. Reflect on your priorities and consider dedicating a bit more energy to productive activities that
-                \t\t    align with your ambitions."""
-            },
-
-            {
-                """
-                \t\t    Exercise is essential for your health and focus. Aim to to include at least 30 minutes of activity daily-it could be a
-                \t\t    brisk walk, stretching, or a quick workout. Even short sessions during study breaks can boost your energy and help you
-                \t\t    stay sharp for your academics.""",
-
-                """
-                \t\t    While staying active is great, be careful not to overdo it. Exercising for more than 2 hours daily can lead to fatigue
-                \t\t    and effect your studies or recovery. Balance your routinge to include rest and focus on academics while maintaining a
-                \t\t    healthy lifestyle."""
-            },
-
-            {
-                """
-                \t\t    I know things can get busyt, and it's not always easy to meet your communitry work goals. Remember, every small effort
-                \t\t    makes a difference, and your involvement truly matters. Completing these hours is not just about meeting a requirement
-                \t\t    --it's chance to learn, grow, and make an impact. I believe in you and know you have what takes to reach this goal.
-                \t\t    Keep going, and don't be affraid to reach out for support or advice. You've got this!""",
-
-                """
-                \t\t    I'm impressed by your dedication and commitment to communitry work! Your hard work is truly appreciated, but don't
-                \t\t    forget to balance it with rest and self-care. Your well-being is important, too. Keep up the great work!"""
-            },
-
-            {
-                """
-                \t\t    I noticed you didn't meet the minimum hours of reproductive work. I understand that balancing everything can be tough,
-                \t\t    but these tasks are important for your growth and the well-being of those around you. Remember, even small contri-
-                \t\t    butions make a difference.""",
+                \t\t    Nexus noticed you didn't meet the minimum hours of reproductive work. I understand that balancing everything can be
+                \t\t    tough, but these tasks are important for your growth and the well-being of those around you. Remember, even small
+                \t\t    contributions make a difference.""",
                 
                 """
-                \t\t    I really admire your dedication and the hard work you put into your responsibilities. However, I want to remind you to
-                \t\t    take some time for yourself and find a a healthy balance. Overextending yourself with reproductive work can lead to
-                \t\t    burnout, so make sure you're also prioritizing rest and self-care. You deserve it!"""
+                \t\t    Nexus really admire your dedication and the hard work you put into your responsibilities. However, I want to remind
+                \t\t    you to take some time for yourself and find a healthy balance. Overextending yourself with reproductive work can
+                \t\t    lead to burnout, so make sure you're also prioritizing rest and self-care. You deserve it!"""
+            },
+
+            {
+                """
+                \t\t    Nexus knows things can get busyt, and it's not always easy to meet your communitry work goals. Remember, every small
+                \t\t    effort makes a difference, and your involvement truly matters. Completing these hours is not just about meeting a
+                \t\t    requirement--it's chance to learn, grow, and make an impact. I believe in you and know you have what takes to reach
+                \t\t    this goal. Keep going, and don't be affraid to reach out for support or advice. You've got this!""",
+
+                """
+                \t\t    Your passion and willingness to go above and beyond are truly inspiring. It shows you deep commitment to making a
+                \t\t    difference. However, it's important to recognize that self-care and getting boundaries are just as vital as the work
+                \t\t    itself. Take this moment to assess how can you continue giving your best without compromising you health and energy.
+                \t\t    Remember, you can achieve even greater things by working smart and staying balanced."""
+            },
+
+            {
+                """
+                \t\t    Remember that setbacks happen to everyone. It's important not to let this moment define your commitment or abilities.
+                \t\t    Reflect on what kept you from reaching your goal and use that insight to plan a better approach for next time. Every
+                \t\t    day is a new opportunity to try again and improve. Your effort matters, and even when progress is slower than you'd
+                \t\t    like, it's still progress. Stay persistent, learn from these experiences, and don't be too hard on yourself. You've
+                \t\t    got this!""",
+
+                """
+                \t\t    Working hard and giving your best effort is admirable, but remember that you're at your most productive and creative
+                \t\t    when you're at most productive and creative when you're well-rested and healthy. It's okay to set boundaries and take
+                \t\t    the time you need to recharge. Your health, energy, and happiness are just as important as your work, and taking care
+                \t\t    of yourself will only help you perform better in the long run. Don't understimate the power of rest-it's not just a
+                \t\t    break, it's an investment in your future success."""
             }
         };
 
-        getUserData(nickName, activityNames, minHours, maxHours, messages_feedbacks);
+        getUserData(nickName, worktypes, activityNames, minHours, maxHours, messages_feedbacks);
     }
 
-    public void getUserData(String nickName, String[] activityNames, double[] minHours, double[] maxHours, String[][] feedBacks_Message){
+    public void getUserData(String nickName, String workTypes[], String[][] activityNames, double[] minHours, double[] maxHours, String[][] feedBacks_Message){
+        Activity[] activities = new Activity[workTypes.length];
+        for (int i = 0; i < activities.length; i++) activities[i] = new Activity(workTypes[i], activityNames[i], minHours[i], maxHours[i], feedBacks_Message[i]);
         
-        Activity[] activities = new Activity[activityNames.length];
-        for (int i = 0; i < activities.length; i++) activities[i] = new Activity(activityNames[i], minHours[i], maxHours[i], feedBacks_Message[i]);
-        
+        LENGTH.setValue(60);
+
         double totalHours = 0;
 
         int count = 0;
         while(count < activities.length){
-            clear();
-            printNewlines_aligment(15, DEFAULT_NO_COLUMNS.getValue(), "How many hours did you spent on following actitivies:");
-            lnprint_alignment(DEFAULT_NO_COLUMNS.getValue(), "-".repeat(60));
-            
-            for(int i = 0; i < count; i++) printWithNewlines_tabs_spaces(2, 7, 2, activities[i].activityName + " : " + activities[i].hours);
+            for(int i = 0; i < activities[count].activityNames.length; i++) {
+                clear();
+                printNewlines_aligment(15, DEFAULT_NO_COLUMNS.getValue(), "How many hours did you spent on following actitivies:");
+                lnprint_alignmentln(DEFAULT_NO_COLUMNS.getValue(), "-".repeat(LENGTH.getValue()));
+                
+                lnprint_alignmentln(DEFAULT_NO_COLUMNS.getValue() - 36, workTypes[count] + ":");
+                
+                for (String activityName : activities[count].activityNames) lnprintWithTabs_spaces(7, 6, activityName);
 
-            try {
-                printWithNewlines_tabs_spaces(2, 7, 2, activities[count].activityName + " : ");
-                activities[count].hours = Double.parseDouble(scan.nextLine());
-                totalHours += activities[count].hours;
-                count++;
-            }catch (NumberFormatException e) {
-                printNewlines_withAnimation_alignment(2, DEFAULT_ANIMATION_SPEED.getValue(), DEFAULT_NO_COLUMNS.getValue(), "Hmm, that doesn't look like a number. Nexus loves numbers! Please try again.");
-                threading(DEFAULT_DELAY.getValue());
+                printNewlines_aligmentln(2, DEFAULT_NO_COLUMNS.getValue(), "-".repeat(LENGTH.getValue()));
+                
+                try {
+                    lnprintWithTabs_spaces(7, 6, "Time Spent on " + activities[count].activityNames[i] + " : ");
+                    activities[count].hours[i] = Double.parseDouble(scan.nextLine());
+                    activities[count].workType_hours += activities[count].hours[i];
+                }catch (NumberFormatException e) {
+                    printNewlines_withAnimation_alignment(2, DEFAULT_ANIMATION_SPEED.getValue(), DEFAULT_NO_COLUMNS.getValue(), "Hmm, that doesn't look like a number. Nexus loves numbers! Please try again.");
+                    i--;
+                }
+
+                threading(SHORT_DELAY.getValue());
             }
+
+            totalHours += activities[count].workType_hours;
+            count++;
         }
 
         analysis(totalHours, activities, nickName);
-        feedBackForUser(activities, nickName);
     }
 
     private void analysis(double totalHours, Activity[] activities, String nickName){
         clear();
 
         LENGTH.setValue(60);
-
-        printNewlines_withAnimation_alignment(13, DEFAULT_ANIMATION_SPEED.getValue(), DEFAULT_NO_COLUMNS.getValue(), "NEXUS ANALYSIS");
+        printNewlines_withAnimation_alignment(11, DEFAULT_ANIMATION_SPEED.getValue(), DEFAULT_NO_COLUMNS.getValue(), "-".repeat(LENGTH.getValue()));
+        lnprintWithAnimation_alignment(DEFAULT_ANIMATION_SPEED.getValue(), DEFAULT_NO_COLUMNS.getValue(), "NEXUS ANALYSIS");
         lnprintWithAnimation_alignment(DEFAULT_ANIMATION_SPEED.getValue(), DEFAULT_NO_COLUMNS.getValue(), "-".repeat(LENGTH.getValue()));
 
-        if (totalHours > 24) lnprintWithAnimation_alignment(DEFAULT_ANIMATION_SPEED.getValue(), DEFAULT_NO_COLUMNS.getValue(), "NOTE: Total reported hours exceed 24 hours in a Day");
+        if (totalHours > 24) lnprintWithAnimation_alignment(DEFAULT_ANIMATION_SPEED.getValue(), DEFAULT_NO_COLUMNS.getValue(), "NOTE: Total reported hours exceed 24 hours in a Day.");
 
         double percentage;
-        for(Activity activity : activities){
-            percentage = (activity.hours / totalHours) * 100;
-            printWithNewlines_tabs_spaces_animation(2, 7, 2, DEFAULT_ANIMATION_SPEED.getValue(),  activity.activityName + " : " + activity.hours + " ("  + String.format("%.2f", percentage) + "%)");
+
+        for (Activity activity : activities) {
+            percentage = (activity.workType_hours / totalHours) * 100;
+
+            printWithNewlines_tabs_spaces_animation(2, 7, 2, DEFAULT_ANIMATION_SPEED.getValue(), activity.workType + " Work : " + activity.workType_hours + " h" + " (" + String.format("%.2f", percentage) + "%)");
+            
+            for(int i = 0; i < activity.activityNames.length; i++) lnprint_tabs_spaces_animation(7, 12, DEFAULT_ANIMATION_SPEED.getValue(), "- " + activity.activityNames[i] + " : " + activity.hours[i] + " h");
         }
 
         printNewlines_withAnimation_alignment(2, DEFAULT_ANIMATION_SPEED.getValue(), DEFAULT_NO_COLUMNS.getValue(), "-".repeat(LENGTH.getValue()));
         clickAny(nickName);
+
+        feedBackForUser(activities, nickName);
     }
 
     private void feedBackForUser(Activity[] activities, String nickname){
@@ -203,15 +197,91 @@ public class TimeManagement implements Design_Animation{
         for(Activity activity : activities){
             clear();
 
-            if(activity.hours < activity.min) message = activity.messages[0];
+            if(activity.workType_hours < activity.min) message = activity.messages[0];
             else message = activity.messages[1];
 
-            
-            printNewlines_aligmentln(16, DEFAULT_NO_COLUMNS.getValue(), "Nexus Message for You (" + activity.activityName + ")");
-
+            printNewlines_aligmentln(16, DEFAULT_NO_COLUMNS.getValue(), "Nexus Message for You (" + activity.workType + " - Min : " + activity.min + ", Max : " + activity.max + ")");
             lnprintWithAnimation(DEFAULT_ANIMATION_SPEED.getValue() + 20, message);
             clickAny(nickname);
         }
+    }
+
+    private void userFeedBack(String nickname){
+        OUTER:
+        do{
+            clear();
+            printNewlines_aligmentln(16, DEFAULT_NO_COLUMNS.getValue(), "Before you leave, could you take a moment to rate Nexus and share suggestions for improvement? Your feeback helps Nexus grow!");
+
+            lnprint_alignmentln(DEFAULT_NO_COLUMNS.getValue(), "Type 'SURE' to rate Nexus. 'LATER' to exit the System.");
+            lnprintWithAnimation_alignment(DEFAULT_ANIMATION_SPEED.getValue() - 20, DEFAULT_NO_COLUMNS.getValue() - 16, "--> ");
+
+            switch(scan.nextLine().toUpperCase()){
+                case "SURE" -> {
+                    ratingSection(nickname);
+                    break OUTER;
+                }
+
+                case "LATER" -> {
+                    programExit(nickname);
+                    break OUTER;
+                }
+
+                default -> lnprintWithAnimation_alignment(DEFAULT_ANIMATION_SPEED.getValue(), DEFAULT_NO_COLUMNS.getValue(), "Sorry, Nexus don't understand you. Please type valid prompt.");
+            }
+
+            threading(DEFAULT_DELAY.getValue());
+        } while(true);
+    }
+
+    private void ratingSection(String nickname){
+        String[] ratingBasis = {"The system is difficult to use or unreliable",
+                                "Some functions work, but significant issues exist.",
+                                "The system meets basic expectations and works reliably",
+                                "The system is user-friendly and mostly bug-free",
+                                "The system exceeds expectations in functionality and design"};
+
+        LENGTH.setValue(70);
+        do {
+            clear();
+            printNewlines_aligment(12, DEFAULT_NO_COLUMNS.getValue(), "-".repeat(LENGTH.getValue()));
+            lnprint_alignment(DEFAULT_NO_COLUMNS.getValue(), "RATE NEXUS");
+            lnprint_alignmentln(DEFAULT_NO_COLUMNS.getValue(), "-".repeat(LENGTH.getValue()));
+
+            for (int i = 0; i < ratingBasis.length; i++) lnprintlnWithTabs_spaces(6, 0, "(" + (i + 1) + ") " + ratingBasis[i]);
+
+            lnprint_alignmentln(DEFAULT_NO_COLUMNS.getValue(), "-".repeat(LENGTH.getValue()));
+            lnprint_alignment(DEFAULT_NO_COLUMNS.getValue() - 16, nickname + ", Enter Your Rate Here : ");
+            
+            try{
+                int rate = Integer.parseInt(scan.nextLine());
+                
+                if (rate > 0 && rate <= ratingBasis.length) {
+                    userSuggestions(nickname, rate + " Rating");
+                    break;
+                } else lnprintWithAnimation_alignment(DEFAULT_ANIMATION_SPEED.getValue(), DEFAULT_NO_COLUMNS.getValue(), "Invalid Rate! Only 1-5 rates is allowed.");
+            }catch(NumberFormatException e){
+                lnprintWithAnimation_alignment(DEFAULT_ANIMATION_SPEED.getValue(), DEFAULT_NO_COLUMNS.getValue(), "Number answers are only applicable in this section.");
+            }
+
+            threading(DEFAULT_DELAY.getValue());
+        } while (true);
+    }
+
+    private void userSuggestions(String nickname, String rating){
+        printNewlines_aligment(2, DEFAULT_NO_COLUMNS.getValue() - 24, "Your Suggestions : ");
+
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter("Java\\User_Feedbacks.txt", true))){
+            writer.append(nickname + " : " + rating + " : " + scan.nextLine());
+            writer.newLine();
+        } catch (IOException x) {}
+
+        programExit(nickname);
+    }
+
+    private void programExit(String nickname){
+        lnprintWithAnimation_alignment(DEFAULT_ANIMATION_SPEED.getValue(), DEFAULT_NO_COLUMNS.getValue(), "Thank you for using Nexus! See you next time " + nickname + "!");
+        threading(DEFAULT_DELAY.getValue());
+        clear();
     }
 
     private void clickAny(String nickname){
@@ -221,24 +291,28 @@ public class TimeManagement implements Design_Animation{
 }
 
 class Activity{
-    protected String activityName;
+    protected String workType;
+    protected double workType_hours;
+    protected String activityNames[];
     protected double max;
     protected double min;
-    protected double hours;
+    protected double hours[];
     protected String[] messages;
 
-    protected Activity(String activityName, double min, double max, String[] messages){
-        this.activityName = activityName;
+    protected Activity(String workType, String[] activityNames, double min, double max, String[] messages){
+        this.workType = workType;
+        this.activityNames = activityNames;
         this.max = max;
         this.min = min;
-        this.hours = 0;
+        this.workType_hours = 0;
+        this.hours = new double[activityNames.length];
         this.messages = messages;
     }
 }
 
 interface Design_Animation{
     enum design{
-        LENGTH(0), DEFAULT_ANIMATION_SPEED(30), LONG_ANIMATION_SPEED(60), DEFAULT_DELAY(800), DEFAULT_NO_COLUMNS(156);
+        LENGTH(0), DEFAULT_ANIMATION_SPEED(30), LONG_ANIMATION_SPEED(60), SHORT_DELAY(500), DEFAULT_DELAY(800), DEFAULT_NO_COLUMNS(156);
     
         int value;
     
@@ -317,6 +391,27 @@ interface Design_Animation{
         for(int i = 0; i < spaces; i++) System.out.print("\s");
 
         System.out.print(text);
+    }
+
+    default void lnprintlnWithTabs_spaces(int tabs, int spaces, String text){
+        System.out.println();
+        for(int i = 0; i < tabs; i++) System.out.print("\t");
+        for(int i = 0; i < spaces; i++) System.out.print("\s");
+
+        System.out.println(text);
+    }
+
+    default void lnprint_tabs_spaces_animation(int tabs, int spaces, int miliseconds, String text){
+        char[] texts = text.toCharArray();
+        
+        System.out.println();
+        for(int i = 0; i < tabs; i++) System.out.print("\t");
+        for(int i = 0; i < spaces; i++) System.out.print("\s");
+
+        for(char t : texts){
+            System.out.print(t);
+            threading(miliseconds);
+        }
     }
 
     default void printWithNewlines_tabs_spaces_animation(int newlines, int tabs, int spaces, int miliseconds, String text){
