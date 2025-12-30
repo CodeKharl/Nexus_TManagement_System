@@ -13,11 +13,10 @@ public class TimeManagement implements Design_Animation{
     Design_Animation.design SHORT_DELAY = Design_Animation.design.SHORT_DELAY;
     Design_Animation.design DEFAULT_DELAY = Design_Animation.design.DEFAULT_DELAY;
     Design_Animation.design DEFAULT_NO_COLUMNS = Design_Animation.design.DEFAULT_NO_COLUMNS;
-    Design_Animation.design LONG_ANIMATION_SPEED = Design_Animation.design.LONG_ANIMATION_SPEED;
 
     public void startUp(){
         clear();
-        printNewlines_withAnimation_alignment(18, DEFAULT_ANIMATION_SPEED.getValue(), DEFAULT_NO_COLUMNS.getValue(), "Hi I'm Nexus, a Time Management System. May I know how should address you?");
+        printNewlines_withAnimation_alignment(18, DEFAULT_ANIMATION_SPEED.getValue(), DEFAULT_NO_COLUMNS.getValue(), "Hi I'm Deyns, a Time Management System. May I know how should address you?");
         printNewlines_aligment(2, DEFAULT_NO_COLUMNS.getValue() - 62, "--> ");
         systemMenu(scan.nextLine());
     }
@@ -31,7 +30,7 @@ public class TimeManagement implements Design_Animation{
         do{
             clear();
             printNewlines_aligment(16, DEFAULT_NO_COLUMNS.getValue(), "-".repeat(LENGTH.getValue()));
-            lnprint_alignment(DEFAULT_NO_COLUMNS.getValue(), "NEXUS PROMPT");
+            lnprint_alignment(DEFAULT_NO_COLUMNS.getValue(), "DEYNS PROMPT");
             lnprint_alignmentln(DEFAULT_NO_COLUMNS.getValue(), "-".repeat(LENGTH.getValue()));
             
             for(int i = 0; i < menu.length; i++) lnprintWithTabs_spaces(7, 6, (i + 1) + ". " + menu[i]);
@@ -47,10 +46,10 @@ public class TimeManagement implements Design_Animation{
                         break OUTER;  //label break statement
                     }
 
-                    default -> printNewlines_withAnimation_alignment(2, DEFAULT_ANIMATION_SPEED.getValue(), DEFAULT_NO_COLUMNS.getValue(), "Hmm, that doesn't seem right. Nexus only understand the two prompts.");
+                    default -> printNewlines_withAnimation_alignment(2, DEFAULT_ANIMATION_SPEED.getValue(), DEFAULT_NO_COLUMNS.getValue(), "Hmm, that doesn't seem right. Deyns only understand the two prompts.");
                 }
             } catch (NumberFormatException e) {
-                printNewlines_withAnimation_alignment(2, DEFAULT_ANIMATION_SPEED.getValue(), DEFAULT_NO_COLUMNS.getValue(), "Uh-oh! Nexus only understands numbers for this prompt section right now.");
+                printNewlines_withAnimation_alignment(2, DEFAULT_ANIMATION_SPEED.getValue(), DEFAULT_NO_COLUMNS.getValue(), "Uh-oh! Deyns only understands numbers for this prompt section right now.");
             }
 
             threading(DEFAULT_DELAY.getValue());
@@ -58,7 +57,7 @@ public class TimeManagement implements Design_Animation{
     }
 
     private void setProgramData(String nickName){
-        String[][] activityNames = {{"Study"}, {"Cooking", "Cleaning"}, {"Voluntary", "Social Activities"}, {"Sleep", "Exercise",}};
+        String[][] activityNames = {{"Study"}, {"Cooking", "Cleaning"}, {"Voluntary", "Social Activities"}, {"Sleep", "Exercise", "Self Entertainment"}};
         String[] worktypes = {"Productive", "Reproductive", "Community", "Personal"};
 
         double[] minHours = {5, 1, 1, 9};
@@ -69,7 +68,7 @@ public class TimeManagement implements Design_Animation{
                 """
                 \t\t    Your recent productive hours did not meet the minimum requirement. Maintaining consistent productivity is crucial
                 \t\t    for achieving your goals. If there were any challenges that impacted your focus or workflow, consider identifying
-                \t\t    them and implementing strategies to overcome them. Nexus recommends reviewing your tasks, setting clear priorities,
+                \t\t    them and implementing strategies to overcome them. Deyns recommends reviewing your tasks, setting clear priorities,
                 \t\t    and using breaks effectively to optimize your time. Let's work towards better results in the next cycle!""",
                 
                 """
@@ -81,19 +80,19 @@ public class TimeManagement implements Design_Animation{
 
             {
                 """
-                \t\t    Nexus noticed you didn't meet the minimum hours of reproductive work. I understand that balancing everything can be
+                \t\t    Deyns noticed you didn't meet the minimum hours of reproductive work. I understand that balancing everything can be
                 \t\t    tough, but these tasks are important for your growth and the well-being of those around you. Remember, even small
                 \t\t    contributions make a difference.""",
                 
                 """
-                \t\t    Nexus really admire your dedication and the hard work you put into your responsibilities. However, I want to remind
+                \t\t    Deyns really admire your dedication and the hard work you put into your responsibilities. However, I want to remind
                 \t\t    you to take some time for yourself and find a healthy balance. Overextending yourself with reproductive work can
                 \t\t    lead to burnout, so make sure you're also prioritizing rest and self-care. You deserve it!"""
             },
 
             {
                 """
-                \t\t    Nexus knows things can get busyt, and it's not always easy to meet your communitry work goals. Remember, every small
+                \t\t    Deyns knows things can get busyt, and it's not always easy to meet your communitry work goals. Remember, every small
                 \t\t    effort makes a difference, and your involvement truly matters. Completing these hours is not just about meeting a
                 \t\t    requirement--it's chance to learn, grow, and make an impact. I believe in you and know you have what takes to reach
                 \t\t    this goal. Keep going, and don't be affraid to reach out for support or advice. You've got this!""",
@@ -125,22 +124,20 @@ public class TimeManagement implements Design_Animation{
         getUserData(nickName, worktypes, activityNames, minHours, maxHours, messages_feedbacks);
     }
 
-    public void getUserData(String nickName, String workTypes[], String[][] activityNames, double[] minHours, double[] maxHours, String[][] feedBacks_Message){
+    private void getUserData(String nickName, String workTypes[], String[][] activityNames, double[] minHours, double[] maxHours, String[][] feedBacks_Message){
         Activity[] activities = new Activity[workTypes.length];
         for (int i = 0; i < activities.length; i++) activities[i] = new Activity(workTypes[i], activityNames[i], minHours[i], maxHours[i], feedBacks_Message[i]);
         
         LENGTH.setValue(60);
 
         double totalHours = 0;
-
         int count = 0;
         while(count < activities.length){
             for(int i = 0; i < activities[count].activityNames.length; i++) {
                 clear();
-                printNewlines_aligment(15, DEFAULT_NO_COLUMNS.getValue(), "How many hours did you spent on following actitivies:");
+                printNewlines_aligment(15, DEFAULT_NO_COLUMNS.getValue(), "-".repeat(LENGTH.getValue()));
+                lnprint_alignment(DEFAULT_NO_COLUMNS.getValue(), "YOUR ACTIVITIES");
                 lnprint_alignmentln(DEFAULT_NO_COLUMNS.getValue(), "-".repeat(LENGTH.getValue()));
-                
-                lnprint_alignmentln(DEFAULT_NO_COLUMNS.getValue() - 36, workTypes[count] + ":");
                 
                 for (String activityName : activities[count].activityNames) lnprintWithTabs_spaces(7, 6, activityName);
 
@@ -151,7 +148,7 @@ public class TimeManagement implements Design_Animation{
                     activities[count].hours[i] = Double.parseDouble(scan.nextLine());
                     activities[count].workType_hours += activities[count].hours[i];
                 }catch (NumberFormatException e) {
-                    printNewlines_withAnimation_alignment(2, DEFAULT_ANIMATION_SPEED.getValue(), DEFAULT_NO_COLUMNS.getValue(), "Hmm, that doesn't look like a number. Nexus loves numbers! Please try again.");
+                    printNewlines_withAnimation_alignment(2, DEFAULT_ANIMATION_SPEED.getValue(), DEFAULT_NO_COLUMNS.getValue(), "Hmm, that doesn't look like a number. Deyns loves numbers! Please try again.");
                     i--;
                 }
 
@@ -170,18 +167,13 @@ public class TimeManagement implements Design_Animation{
 
         LENGTH.setValue(60);
         printNewlines_withAnimation_alignment(11, DEFAULT_ANIMATION_SPEED.getValue(), DEFAULT_NO_COLUMNS.getValue(), "-".repeat(LENGTH.getValue()));
-        lnprintWithAnimation_alignment(DEFAULT_ANIMATION_SPEED.getValue(), DEFAULT_NO_COLUMNS.getValue(), "NEXUS ANALYSIS");
+        lnprintWithAnimation_alignment(DEFAULT_ANIMATION_SPEED.getValue(), DEFAULT_NO_COLUMNS.getValue(), "DEYNS ANALYSIS");
         lnprintWithAnimation_alignment(DEFAULT_ANIMATION_SPEED.getValue(), DEFAULT_NO_COLUMNS.getValue(), "-".repeat(LENGTH.getValue()));
 
         if (totalHours > 24) lnprintWithAnimation_alignment(DEFAULT_ANIMATION_SPEED.getValue(), DEFAULT_NO_COLUMNS.getValue(), "NOTE: Total reported hours exceed 24 hours in a Day.");
 
-        double percentage;
-
         for (Activity activity : activities) {
-            percentage = (activity.workType_hours / totalHours) * 100;
-
-            printWithNewlines_tabs_spaces_animation(2, 7, 2, DEFAULT_ANIMATION_SPEED.getValue(), activity.workType + " Work : " + activity.workType_hours + " h" + " (" + String.format("%.2f", percentage) + "%)");
-            
+            printWithNewlines_tabs_spaces_animation(2, 7, 2, DEFAULT_ANIMATION_SPEED.getValue(), activity.workType + " Work : " + activity.workType_hours + " h" + " (" + String.format("%.2f", ((activity.workType_hours / totalHours) * 100)) + "%)");
             for(int i = 0; i < activity.activityNames.length; i++) lnprint_tabs_spaces_animation(7, 12, DEFAULT_ANIMATION_SPEED.getValue(), "- " + activity.activityNames[i] + " : " + activity.hours[i] + " h");
         }
 
@@ -197,10 +189,9 @@ public class TimeManagement implements Design_Animation{
         for(Activity activity : activities){
             clear();
 
-            if(activity.workType_hours < activity.min) message = activity.messages[0];
-            else message = activity.messages[1];
+            message = activity.workType_hours < activity.min ? activity.messages[0] : activity.messages[1];
 
-            printNewlines_aligmentln(16, DEFAULT_NO_COLUMNS.getValue(), "Nexus Message for You (" + activity.workType + " - Min : " + activity.min + ", Max : " + activity.max + ")");
+            printNewlines_aligmentln(16, DEFAULT_NO_COLUMNS.getValue(), "Deyns Message for You (" + activity.workType + " - Min : " + activity.min + ", Max : " + activity.max + ")");
             lnprintWithAnimation(DEFAULT_ANIMATION_SPEED.getValue() + 20, message);
             clickAny(nickname);
         }
@@ -210,9 +201,9 @@ public class TimeManagement implements Design_Animation{
         OUTER:
         do{
             clear();
-            printNewlines_aligmentln(16, DEFAULT_NO_COLUMNS.getValue(), "Before you leave, could you take a moment to rate Nexus and share suggestions for improvement? Your feeback helps Nexus grow!");
+            printNewlines_aligmentln(16, DEFAULT_NO_COLUMNS.getValue(), "Before you leave, could you take a moment to rate Deyns and share suggestions for improvement? Your feeback helps Deyns grow!");
 
-            lnprint_alignmentln(DEFAULT_NO_COLUMNS.getValue(), "Type 'SURE' to rate Nexus. 'LATER' to exit the System.");
+            lnprint_alignmentln(DEFAULT_NO_COLUMNS.getValue(), "Type 'SURE' to rate Deyns. 'LATER' to exit the System.");
             lnprintWithAnimation_alignment(DEFAULT_ANIMATION_SPEED.getValue() - 20, DEFAULT_NO_COLUMNS.getValue() - 16, "--> ");
 
             switch(scan.nextLine().toUpperCase()){
@@ -226,7 +217,7 @@ public class TimeManagement implements Design_Animation{
                     break OUTER;
                 }
 
-                default -> lnprintWithAnimation_alignment(DEFAULT_ANIMATION_SPEED.getValue(), DEFAULT_NO_COLUMNS.getValue(), "Sorry, Nexus don't understand you. Please type valid prompt.");
+                default -> lnprintWithAnimation_alignment(DEFAULT_ANIMATION_SPEED.getValue(), DEFAULT_NO_COLUMNS.getValue(), "Sorry, Deyns don't understand you. Please type valid prompt.");
             }
 
             threading(DEFAULT_DELAY.getValue());
@@ -244,7 +235,7 @@ public class TimeManagement implements Design_Animation{
         do {
             clear();
             printNewlines_aligment(12, DEFAULT_NO_COLUMNS.getValue(), "-".repeat(LENGTH.getValue()));
-            lnprint_alignment(DEFAULT_NO_COLUMNS.getValue(), "RATE NEXUS");
+            lnprint_alignment(DEFAULT_NO_COLUMNS.getValue(), "RATE DEYNS");
             lnprint_alignmentln(DEFAULT_NO_COLUMNS.getValue(), "-".repeat(LENGTH.getValue()));
 
             for (int i = 0; i < ratingBasis.length; i++) lnprintlnWithTabs_spaces(6, 0, "(" + (i + 1) + ") " + ratingBasis[i]);
@@ -271,15 +262,14 @@ public class TimeManagement implements Design_Animation{
         printNewlines_aligment(2, DEFAULT_NO_COLUMNS.getValue() - 24, "Your Suggestions : ");
 
         try(BufferedWriter writer = new BufferedWriter(new FileWriter("Java\\User_Feedbacks.txt", true))){
-            writer.append(nickname + " : " + rating + " : " + scan.nextLine());
-            writer.newLine();
+            writer.append(nickname + " : " + rating + " : " + scan.nextLine() + "\n");
         } catch (IOException x) {}
 
         programExit(nickname);
     }
 
     private void programExit(String nickname){
-        lnprintWithAnimation_alignment(DEFAULT_ANIMATION_SPEED.getValue(), DEFAULT_NO_COLUMNS.getValue(), "Thank you for using Nexus! See you next time " + nickname + "!");
+        lnprintWithAnimation_alignment(DEFAULT_ANIMATION_SPEED.getValue(), DEFAULT_NO_COLUMNS.getValue(), "Thank you for using Deyns! See you next time " + nickname + "!");
         threading(DEFAULT_DELAY.getValue());
         clear();
     }
@@ -330,24 +320,20 @@ interface Design_Animation{
     }
 
     default void printNewlines_withAnimation_alignment(int newline, int miliseconds, int columns, String text){
-        char[] texts = text.toCharArray();
-
         for (int i = 0; i < newline; i++) System.out.println();
 
         System.out.printf("%" + (columns - text.length()) / 2 + "s", "");
 
-        for(char t : texts){
+        for(char t : text.toCharArray()){
             System.out.print(t);
             threading(miliseconds);
         }
     }
 
     default void lnprintWithAnimation_alignment(int miliseconds, int columns, String text){
-        char[] texts = text.toCharArray();
-
         System.out.printf("\n%" + (columns - text.length()) / 2 + "s", "");
 
-        for(char t : texts){
+        for(char t : text.toCharArray()){
             System.out.print(t);
             threading(miliseconds);
         }
@@ -402,36 +388,30 @@ interface Design_Animation{
     }
 
     default void lnprint_tabs_spaces_animation(int tabs, int spaces, int miliseconds, String text){
-        char[] texts = text.toCharArray();
-        
         System.out.println();
         for(int i = 0; i < tabs; i++) System.out.print("\t");
         for(int i = 0; i < spaces; i++) System.out.print("\s");
 
-        for(char t : texts){
+        for(char t : text.toCharArray()){
             System.out.print(t);
             threading(miliseconds);
         }
     }
 
     default void printWithNewlines_tabs_spaces_animation(int newlines, int tabs, int spaces, int miliseconds, String text){
-        char[] texts = text.toCharArray();
-        
         for(int i = 0; i < newlines; i++ )System.out.println();
         for(int i = 0; i < tabs; i++) System.out.print("\t");
         for(int i = 0; i < spaces; i++) System.out.print("\s");
 
-        for(char t : texts){
+        for(char t : text.toCharArray()){
             System.out.print(t);
             threading(miliseconds);
         }
     }
 
     default void lnprintWithAnimation(int miliseconds, String text){
-        char[] texts = text.toCharArray();
-
         System.out.println();
-        for(char t : texts){
+        for(char t : text.toCharArray()){
             System.out.print(t);
             threading(miliseconds);
         }
@@ -440,14 +420,12 @@ interface Design_Animation{
     default void threading(int miliseconds){
         try {
             Thread.sleep(miliseconds);
-        } catch (InterruptedException e) {
-        }
+        } catch (InterruptedException e) {}
     }
 
     default void clear(){
         try {
             new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-        } catch (IOException | InterruptedException e) {
-        }
+        } catch (IOException | InterruptedException e) {}
     }
 }
