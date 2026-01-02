@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+BUILD_DIR='build'
+SRC_DIR='src'
+JFLAGS=(-d "$BUILD_DIR")
+
+SOURCES=()
+while read -r src; do
+    SOURCES+=("$src")
+done < <(find "$SRC_DIR" -name '*.java')
+
+mkdir "$BUILD_DIR"
+
+javac "${JFLAGS[@]}" "${SOURCES[@]:?}" || {
+    echo 'failed to build!'
+    exit 1
+}
+
+echo 'Build successfully!'
