@@ -1,18 +1,30 @@
 #!/usr/bin/env bash
 
-BUILD_DIR='build'
 SRC_DIR='src'
-JFLAGS=(-d "$BUILD_DIR")
+
+BUILD_DIR='build'
+JAVAC_FLAGS=(-d "$BUILD_DIR")
+
+BIN_DIR='bin'
+JAR_NAME='Nexus.jar'
+MANIFEST_NAME='manifest.txt'
+
+JAR_FLAGS=(cfm "$JAR_NAME" "$MANIFEST_NAME" -C "$BUILD_DIR" .)
+
+mkdir "$BUILD_DIR" "$BIN_DIR" 2>/dev/null
 
 SOURCES=()
 while read -r src; do
     SOURCES+=("$src")
 done < <(find "$SRC_DIR" -name '*.java')
 
-mkdir "$BUILD_DIR"
+javac "${JAVAC_FLAGS[@]}" "${SOURCES[@]:?}" || {
+    echo 'failed to build classes!'
+    exit 1
+}
 
-javac "${JFLAGS[@]}" "${SOURCES[@]:?}" || {
-    echo 'failed to build!'
+jar "${JAR_FLAGS[@]}" || {
+    echo 'failed to create the jar'
     exit 1
 }
 
