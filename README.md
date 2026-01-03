@@ -1,49 +1,60 @@
-# Nexus_TManagement_System ⏱️
+# Nexus Time Management System
 
-A simple Java-based **Time Management System** that helps users track activities and view a **static visualization** of how their time is spent.
+A simple Java-based time management system that tracks user activities and provides static visualizations to help you understand how you spend your time.
 
----
+## Features
 
-## 📁 Project Structure
+- Track and manage time spent on various activities
+- Generate static visualizations of your time usage
+- Simple and lightweight Java application
+- Easy-to-use build system
 
+## Project Structure
+
+```
 Nexus_TManagement_System/
-├── src/ # Java source files
-├── scripts/ # Build scripts
-├── meta-inf/ # Manifest files
-├── README.md
+├── src/              # Source code files
+├── scripts/          # Build and utility scripts
+├── META-INF/         # Manifest and metadata files
+├── build/            # Compiled class files (generated)
+├── bin/              # JAR executable (generated)
+└── README.md         # This file
+```
 
+## Prerequisites
 
-Build output:
+- Java Development Kit (JDK) 8 or higher
+- Bash shell (for running build scripts)
 
-├── build/ # Compiled class files
-├── bin/ # Generated JAR file
+## Building the Project
 
-
----
-
-## 🛠️ Build
-
-Requirements: **Java (JDK)** and **Bash**
+To build the project, run the build script from the project root:
 
 ```bash
 ./scripts/build
+```
 
-▶️ Run
+This script will:
+- Compile all Java source files from `src/` into the `build/` directory
+- Package the compiled classes into a JAR file in the `bin/` directory
 
-java -jar bin/<jar-file-name>.jar
+## Running the Application
 
-🧾 Manifest
+After building, you can run the application using:
 
-    Located in meta-inf/
+```bash
+java -jar bin/Nexus_TManagement_System.jar
+```
 
-    Can be modified based on the src contents
+## Customization
 
-    Ensure Main-Class is correctly set
+You can modify the `META-INF/MANIFEST.MF` file to customize the JAR metadata based on your source code structure. Update the Main-Class entry to match your main application class.
 
-📄 License
+## Contributing
 
-Educational and personal use.
+Feel free to clone this repository and make improvements:
 
-
-Language: Java
-Project Type: Time Management System
+```bash
+git clone <repository-url>
+cd Nexus_TManagement_System
+```
