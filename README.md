@@ -1,31 +1,32 @@
-# Nexus_TManagement_System ⏱️
+# Nexus_TManagement_System ⏳
 
-A simple Java-based **Time Management System** that helps users track activities and view a **static visualization** of how their time is spent.
+Nexus_TManagement_System is a simple Java project focused on **time management**.  
+It allows users to manage their activities and view a **static visualization** that represents how their time is spent.
 
-This project is lightweight, easy to build, and intended for learning, experimentation, and extension.
-
----
-
-## ✨ Features
-
-- Time management logic for user activities
-- Static visualization of activity data
-- Simple Java project structure
-- No external frameworks required
-- Easy build process using Bash
+This project is designed to be lightweight, beginner-friendly, and easy to extend.
 
 ---
 
-## 📁 Project Structure
+## 🚀 Features
+
+- Activity-based time management
+- Static visualization of user activities
+- Simple and clean Java project structure
+- No external libraries or frameworks
+- Bash-based build system
+
+---
+
+## 📂 Project Structure
 
 Nexus_TManagement_System/
-├── src/ # Java source code
+├── src/ # Java source files
 ├── scripts/ # Build scripts
 ├── meta-inf/ # Manifest and metadata
 ├── README.md # Project documentation
 
 
-After building:
+After building the project, the following directories will be generated:
 
 ├── build/ # Compiled .class files
 ├── bin/ # Generated JAR file
@@ -37,49 +38,51 @@ After building:
 
 Make sure you have **Java (JDK)** and **Bash** installed.
 
-Run the build script from the project root:
+From the project root, run:
 
 ```bash
 ./scripts/build
 
 Build Output
 
-    build/ → Compiled .class files
+    build/ contains compiled .class files
 
-    bin/ → Executable JAR file
+    bin/ contains the packaged JAR file
 
 ▶️ Running the Application
 
-After building, run the generated JAR file:
+After building, run the application using:
 
 java -jar bin/<jar-file-name>.jar
 
-Replace <jar-file-name> with the actual name of the JAR file inside the bin directory.
+Replace <jar-file-name> with the name of the generated JAR file.
 🧾 Manifest Configuration
 
     The manifest file is located in meta-inf/
 
-    You may modify it based on the contents and entry point of the src directory
+    You may modify it based on the contents of the src directory
 
-    Ensure the Main-Class matches your main Java class
+    Ensure the Main-Class entry matches your main Java class
 
-🚀 Getting Started (Clone & Build)
+📦 Getting Started
+
+Clone the repository and build the project:
 
 git clone <repository-url>
 cd Nexus_TManagement_System
 ./scripts/build
 
-📌 Notes
+📝 Notes
 
-    This project uses static visualization, not real-time graphs
+    The visualization provided is static, not real-time
 
-    Designed to be minimal and beginner-friendly
+    This project is suitable for learning, academic use, and experimentation
 
-    Suitable for academic projects or Java practice
+    Feel free to extend or refactor the codebase
 
 🤝 Contributing
 
-Contributions are welcome!
+Contributions are welcome.
 
     Fork the repository
 
@@ -87,10 +90,10 @@ Contributions are welcome!
 
     Make your changes
 
-    Open a pull request
+    Submit a pull request
 
-Feel free to experiment, refactor, or extend the functionality.
+Feel free to clone and modify the project.
 📄 License
 
-This project is open for educational and personal use.
-Add a license file if you plan to distribute it publicly.
+This project is intended for educational and personal use.
+You may add a license file if you plan to distribute it publicly.
