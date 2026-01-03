@@ -1,6 +1,4 @@
 /build
 .gitattributes
 User_Feedbacks.txt
-*.jar
-bin
-
+/bin
