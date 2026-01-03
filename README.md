@@ -43,7 +43,7 @@ This script will:
 After building, you can run the application using:
 
 ```bash
-java -jar bin/Nexus_TManagement_System.jar
+java -jar bin/Nexus.jar
 ```
 
 ## Customization
