@@ -18,14 +18,16 @@ while read -r src; do
     SOURCES+=("$src")
 done < <(find "$SRC_DIR" -name '*.java')
 
-javac "${JAVAC_FLAGS[@]}" "${SOURCES[@]:?'no java file found.'}" || {
+: "${SOURCES[@]:?'no java file found.'}"
+
+if ! javac "${JAVAC_FLAGS[@]}" "${SOURCES[@]}"; then
     echo 'failed to build classes.' >&2
     exit 1
-}
+fi
 
-jar "${JAR_FLAGS[@]}" || {
+if ! jar "${JAR_FLAGS[@]}"; then
     echo 'failed to create the jar.' >&2
     exit 1
-}
+fi
 
 echo 'Build successfully!'

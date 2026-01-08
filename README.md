@@ -35,6 +35,7 @@ To build the project, run the build script from the project root:
 ```
 
 This script will:
+
 - Compile all Java source files from `src/` into the `build/` directory
 - Package the compiled classes into a JAR file in the `bin/` directory
 
