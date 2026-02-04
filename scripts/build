@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+error_exit() {
+    message=$1
+    echo "$message" >&2
+    exit 1
+}
+
 SRC_DIR='src'
 
 BUILD_DIR='build'
@@ -20,14 +26,7 @@ done < <(find "$SRC_DIR" -name '*.java')
 
 : "${SOURCES[@]:?'no java file found.'}"
 
-if ! javac "${JAVAC_FLAGS[@]}" "${SOURCES[@]}"; then
-    echo 'failed to build classes.' >&2
-    exit 1
-fi
-
-if ! jar "${JAR_FLAGS[@]}"; then
-    echo 'failed to create the jar.' >&2
-    exit 1
-fi
+javac "${JAVAC_FLAGS[@]}" "${SOURCES[@]}" || echo 'failed to build classes.'
+jar "${JAR_FLAGS[@]}" || echo 'failed to create the jar.'
 
 echo 'Build successfully!'
